@@ -1,0 +1,121 @@
+# ========================================
+# General index page
+# ========================================
+GET http://localhost:7007/api/index/
+Accept: text/html
+
+###
+
+# ========================================
+# Trip routes
+# ========================================
+
+# Get all trips
+GET http://localhost:7007/api/trip
+Accept: application/json
+
+###
+
+# Create a new trip (example JSON body)
+POST http://localhost:7007/api/trip/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Test Trip",
+  "destination": "Iceland",
+  "duration": 7
+}
+
+###
+
+# Get trip by ID
+GET http://localhost:7007/api/trip/1
+Accept: application/json
+
+###
+
+# Get packing weight for trip
+GET http://localhost:7007/api/trip/1/packing/weight
+Accept: application/json
+
+###
+
+# Update a trip
+PUT http://localhost:7007/api/trip/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Updated Trip Name",
+  "duration": 10
+}
+
+###
+
+# Add a guide to a trip
+PUT http://localhost:7007/api/trip/1/guide/2
+Accept: application/json
+
+###
+
+# Delete a trip
+DELETE http://localhost:7007/api/trip/1
+Accept: application/json
+
+###
+
+# Get total trip value per guide
+GET http://localhost:7007/api/trip/guides/totalPrice
+Accept: application/json
+
+###
+
+# ========================================
+# Guide routes (assumed pattern)
+# ========================================
+
+# Get all guides
+GET http://localhost:7007/api/guide/
+Accept: application/json
+
+###
+
+# Create a new guide
+POST http://localhost:7007/api/guide/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "John Doe",
+  "experienceYears": 5
+}
+
+###
+
+# Get guide by ID
+GET http://localhost:7007/api/guide/2
+Accept: application/json
+
+###
+
+# ========================================
+# Security / Auth routes (placeholders)
+# ========================================
+
+# Login (example)
+POST http://localhost:7007/api/security/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user1",
+  "password": "password123"
+}
+
+###
+
+# Protected route example (requires auth header)
+GET http://localhost:7007/api/security/protected
+Accept: application/json
+Authorization: Bearer <INSERT_YOUR_TOKEN_HERE>
