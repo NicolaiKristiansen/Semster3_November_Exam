@@ -1,0 +1,119 @@
+### Test Route: GET / (Welcome Endpoint)
+GET {{url}}
+Accept: application/json
+
+
+### Test Route: POST /auth/login (Login Endpoint)
+POST {{url}}/security/auth/login
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "password": "password123"
+}
+
+> {% client.global.set("USER_TOKEN", response.body.token) %}
+
+
+### Test Route: POST /auth/register (Register Endpoint)
+POST {{url}}/security/auth/register
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "password": "password123"
+}
+
+> {% client.global.set("USER_TOKEN", response.body.token) %}
+
+### Login as ADMIN (to get ADMIN_TOKEN)
+POST {{url}}/security/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "adminpassword"
+}
+
+> {% client.global.set("ADMIN_TOKEN", response.body.token) %}
+
+################################################################################
+# Candidates routes
+################################################################################
+
+### Test Route: GET /candidates (Get all Candidates)
+GET {{url}}/candidates/
+Authorization: Bearer {{USER_TOKEN}}
+
+### Test Route: GET /candidates/{id} (Get Candidate by ID)
+GET {{url}}/candidates/1
+Authorization: Bearer {{USER_TOKEN}}
+
+### Test Route: GET /candidates/reports/candidates/top-by-popularity (Get Top Candidate by Popularity)
+GET {{url}}/candidates/reports/candidates/top-by-popularity
+Authorization: Bearer {{USER_TOKEN}}
+
+### Test Route: POST /candidates (Create New Candidate)
+POST {{url}}/candidates
+Content-Type: application/json
+Authorization: Bearer {{ADMIN_TOKEN}}
+
+{
+  "name": "John Doe",
+  "phone": 1234567890,
+  "educationBackground": "Bachelor's Degree in Computer Science"
+}
+
+### Test Route: PUT /candidates/{id} (Update Candidate by ID)
+PUT {{url}}/candidates/5
+Content-Type: application/json
+Authorization: Bearer {{ADMIN_TOKEN}}
+
+{
+  "name": "John Updated Doe"
+}
+
+### Test Route: DELETE /candidates/{id} (Delete Candidate by ID)
+DELETE {{url}}/candidates/5
+Authorization: Bearer {{ADMIN_TOKEN}}
+
+### Test Route: PUT /candidates/{id}/skills/{skillId}
+PUT {{url}}/candidates/1/skills/1
+Authorization: Bearer {{ADMIN_TOKEN}}}
+
+################################################################################
+# Skills routes
+################################################################################
+
+### Test Route: POST /skills (Create New Skill)
+POST {{url}}/skills
+Content-Type: application/json
+Authorization: Bearer {{ADMIN_TOKEN}}
+
+{
+  "name": "Java",
+  "category": "PROG_LANG",
+  "description": "General-purpose, strongly-typed language for backend and Android."
+}
+
+
+### Test Route: GET /skills/{id} (Get Skill by ID)
+GET {{url}}/skills/2
+Authorization: Bearer {{USER_TOKEN}}
+
+
+### Test Route: PUT /skills/{id} (Update Skill by ID)
+PUT {{url}}/skills/8
+Content-Type: application/json
+Authorization: Bearer {{ADMIN_TOKEN}}
+
+{
+  "name": "Java Updated",
+  "category": "DB",
+  "description": "Updated description."
+}
+
+
+### Test Route: DELETE /skills/{id} (Delete Skill by ID)
+DELETE {{url}}/skills/8
+Authorization: Bearer {{ADMIN_TOKEN}}
