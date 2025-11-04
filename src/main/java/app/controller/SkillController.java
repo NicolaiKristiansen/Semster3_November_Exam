@@ -1,33 +1,34 @@
 package app.controller;
 
 import app.config.HibernateConfig;
-import app.dao.EntityDAO;
-import app.dto.EntityTemplateDTO;
-import app.entity.EntityTemplate;
+import app.dao.SkillDAO;
+
+import app.dto.SkillDTO;
+import app.entity.Skill;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import jakarta.persistence.EntityManagerFactory;
 
-public class EntityTemplateController {
-    private final EntityDAO dao;
+public class SkillController {
+    private final SkillDAO dao;
 
-    public EntityTemplateController(){
+    public SkillController(){
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-        this.dao = new EntityDAO(emf);
+        this.dao = new SkillDAO(emf);
 
     }
 
     public void create(Context ctx){
-        EntityTemplateDTO dto = ctx.bodyAsClass(EntityTemplateDTO.class);
-        EntityTemplate name = dao.create(dto);
+        SkillDTO dto = ctx.bodyAsClass(SkillDTO.class);
+        Skill name = dao.create(dto);
 
         ctx.status(HttpStatus.CREATED).json(name);
     }
 
     public void findByID(Context ctx){
         int id = Integer.parseInt(ctx.pathParam("id"));
-        EntityTemplate name = dao.findById(id);
-        EntityTemplateDTO dto = new EntityTemplateDTO(name);
+        Skill name = dao.findById(id);
+        SkillDTO dto = new SkillDTO(name);
 
         if(dto == null){
             ctx.status(HttpStatus.NOT_FOUND).result("The name could not be found");
@@ -38,10 +39,10 @@ public class EntityTemplateController {
 
     public void update(Context ctx){
         int id = Integer.parseInt(ctx.pathParam("id"));
-        EntityTemplateDTO dto = ctx.bodyAsClass(EntityTemplateDTO.class);
+        SkillDTO dto = ctx.bodyAsClass(SkillDTO.class);
         dto.setId(id);
-        EntityTemplate name = dao.update(dto);
-        EntityTemplateDTO dtoToBeSerialized = new EntityTemplateDTO(name);
+        Skill name = dao.update(dto);
+        SkillDTO dtoToBeSerialized = new SkillDTO(name);
 
         if(dtoToBeSerialized == null){
             ctx.status(404).json("name with id " + id + " not found.");

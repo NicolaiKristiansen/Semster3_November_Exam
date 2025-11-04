@@ -1,11 +1,13 @@
 package app.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import app.exceptions.ApiException;
 //import app.security.ISecurityController;
 //import app.security.SecurityController;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.Javalin;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.config.JavalinConfig;
@@ -19,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class ApplicationConfig {
     @Getter
-    private ObjectMapper jsonMapper = new ObjectMapper();
+    private ObjectMapper jsonMapper = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     private Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
     private static ApplicationConfig appConfig;
     private static JavalinConfig javalinConfig;
